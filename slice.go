@@ -15,6 +15,9 @@
 package utility
 
 import (
+	"errors"
+	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -97,4 +100,38 @@ func IntSliceDeduplication(ints []int) []int {
 		ints = append(ints, k)
 	}
 	return ints
+}
+
+//[]string 转 []int
+func Strings2Ints(src []string) (dst []int, err error) {
+	if len(src) == 0 {
+		return nil, errors.New("string convert to int error:not found src ")
+	}
+	for _, v := range src {
+		temp, err := strconv.Atoi(v)
+		if err != nil {
+			return nil, errors.New("string convert to int error:not found src")
+		}
+		dst = append(dst, temp)
+	}
+	return
+}
+
+// Ints2Strings []int转[]string
+func Ints2Strings(src []int) []string {
+	dst := make([]string, len(src))
+	for i, v := range src {
+		dst[i] = strconv.Itoa(v)
+	}
+	return dst
+}
+
+//[]string 转 []int 排序从小到大
+func Strings2IntsAsc(src []string) (dst []int, err error) {
+	dst, err = Strings2Ints(src)
+	if err != nil {
+		return
+	}
+	sort.Ints(dst)
+	return
 }

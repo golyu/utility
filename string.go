@@ -28,6 +28,7 @@ import (
 	"fmt"
 	"io"
 	r "math/rand"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -523,4 +524,29 @@ func Underline2Camel(s string) string {
 		data = append(data, d)
 	}
 	return string(data[:])
+}
+
+//[]string 转 []int
+func Strings2Ints(src []string) (dst []int, err error) {
+	if len(src) == 0 {
+		return nil, errors.New("string convert to int error:not found src ")
+	}
+	for _, v := range src {
+		temp, err := strconv.Atoi(v)
+		if err != nil {
+			return nil, errors.New("string convert to int error:not found src")
+		}
+		dst = append(dst, temp)
+	}
+	return
+}
+
+//[]string 转 []int 排序从小到大
+func Strings2IntsAsc(src []string) (dst []int, err error) {
+	dst, err = Strings2Ints(src)
+	if err != nil {
+		return
+	}
+	sort.Ints(dst)
+	return
 }

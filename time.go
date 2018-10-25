@@ -27,6 +27,7 @@ const (
 	LAYOUT_FORMAT14 = "20060102150405"
 	LAYOUT_FORMAT10 = "2006-01-02"
 	LAYOUT_FORMAT8  = "20060102"
+	LAYOUT_FORMAT17 = "20060102 15:04:05"
 )
 
 var (
@@ -141,6 +142,11 @@ func Format19(time time.Time) string {
 	return time.Format(LAYOUT_FORMAT19)
 }
 
+// Format17 format date YYYYMMDD HH:mm:ss
+func Format17(time time.Time) string {
+	return time.Format(LAYOUT_FORMAT17)
+}
+
 // Format14 format date YYYYMMDDHHmmss
 func Format14(time time.Time) string {
 	return time.Format(LAYOUT_FORMAT14)
@@ -186,9 +192,22 @@ func Format19ToTimestamp(formatTime string) (int, error) {
 	}
 }
 
+// Format17ToTimestamp 格式化的时间(YYYYMMDD HH:mm:ss)转时间戳
+func Format17ToTimestamp(formatTime string) (int, error) {
+	if len(formatTime) != 17 {
+		return 0, errors.New("formatTime length error")
+	} else {
+		sTemp, err := time.ParseInLocation(LAYOUT_FORMAT17, formatTime, loc)
+		if err != nil {
+			return 0, err
+		}
+		return int(sTemp.Unix()), nil
+	}
+}
+
 // Format14ToTimestamp 格式化的时间(YYYYMMDDHHmmss)转时间戳
 func Format14ToTimestamp(formatTime string) (int, error) {
-	if len(formatTime) != 19 {
+	if len(formatTime) != 14 {
 		return 0, errors.New("formatTime length error")
 	} else {
 		sTemp, err := time.ParseInLocation(LAYOUT_FORMAT14, formatTime, loc)

@@ -258,3 +258,14 @@ func GetNightTimestamp(day int) int {
 	res, _ := Format8ToTimestamp(d)
 	return res
 }
+
+// 计算两个时间相隔多少天
+func TimeSub(t1, t2 time.Time) int {
+	t1 = t1.UTC().Truncate(24 * time.Hour)
+	t2 = t2.UTC().Truncate(24 * time.Hour)
+	result := int(t1.Sub(t2).Hours() / 24)
+	if result < 0 {
+		result *= -1
+	}
+	return result
+}

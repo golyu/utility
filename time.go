@@ -269,3 +269,9 @@ func TimeSub(t1, t2 time.Time) int {
 	}
 	return result
 }
+
+// ParseInLocation 根据格式解析格式化为字符串的的时间
+func ParseInLocation(layout string, value string) (time.Time, error) {
+	sTemp, err := time.ParseInLocation(layout, value, loc)
+	return sTemp, err
+}
